@@ -21,7 +21,7 @@ O dataset utilizado consiste em uma lista de todos os filmes e programas de TV d
 
 ### Implementação
 A base do dashboard foi construida usando o [Shiny](https://shiny.rstudio.com/) e o [Shiny Dashboard](https://rstudio.github.io/shinydashboard/).
-Para a manipulação dos dados foram utilizadas as bibliotecas [dplyr](https://dplyr.tidyverse.org/), [fuzzyjoin](https://github.com/dgrtwo/fuzzyjoin), [sf](https://r-spatial.github.io/sf/) e [rgdal](https://rdrr.io/cran/rgdal/).
+Para a manipulação dos dados foram utilizadas as bibliotecas [dplyr](https://dplyr.tidyverse.org/), [tidyr](https://tidyr.tidyverse.org/), [fuzzyjoin](https://github.com/dgrtwo/fuzzyjoin), [sf](https://r-spatial.github.io/sf/) e [rgdal](https://rdrr.io/cran/rgdal/).
 Para a plotagem dos gráficos foi utilizado a biblioteca [ggplot2](https://ggplot2.tidyverse.org/), e para a interatividade dos gráficos a biblioteca [Plotly](https://plotly.com/r/).
 Também foi utilizado o pacote do [leaflet](https://rstudio.github.io/leaflet/) para a exibição de um mapa interativo, além de outros pacotes como [ggthemes](https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/), [reactable](https://glin.github.io/reactable/) e [RColorBrewer](https://r-graph-gallery.com/38-rcolorbrewers-palettes.html).
 

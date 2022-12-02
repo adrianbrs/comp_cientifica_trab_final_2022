@@ -19,6 +19,7 @@ A base do dashboard foi construida usando o
 Dashboard](https://rstudio.github.io/shinydashboard/). Para a
 manipulação dos dados foram utilizadas as bibliotecas
 [dplyr](https://dplyr.tidyverse.org/),
+[tidyr](https://tidyr.tidyverse.org/),
 [fuzzyjoin](https://github.com/dgrtwo/fuzzyjoin),
 [sf](https://r-spatial.github.io/sf/) e
 [rgdal](https://rdrr.io/cran/rgdal/). Para a plotagem dos gráficos foi
