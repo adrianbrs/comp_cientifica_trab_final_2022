@@ -4,12 +4,17 @@ files <- list(
 
 for (f in files) {
   url <- f[1]
-  target <- paste("./data/", stringr::str_trim(f[2]), sep = '')
+  base_dir <- "./data";
+  target <- paste(base_dir, "/", stringr::str_trim(f[2]), sep = '')
   cat("Checking for file", target, "...\n")
+  
+  if (!dir.exists(base_dir)) {
+    dir.create(base_dir)
+  }
   
   if (!file.exists(target)) {
     cat("Downloading file data:", target, "\n")
-    download.file(url, target, method = "auto")
+    download.file(url, target, method = "auto", )
     cat("Success!\n")
   } else {
     cat("File ", target, " already exists, skip...\n")

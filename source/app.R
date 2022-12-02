@@ -11,11 +11,16 @@ library(sf)
 library(fuzzyjoin)
 library(readr)
 library(tidyr)
+library(stringr)
 
-source('data.R')
+dataset_file <- "./data/netflix_titles.csv"
+
+if (!file.exists(dataset_file)) {
+  stop(paste("Missing dataset file on:", dataset_file))
+}
 
 # Dataset
-nf_titles = read_csv("./data/netflix_titles.csv")
+nf_titles = read_csv(dataset_file)
 
 # Separa coluna de atores/atrizes
 nf_cast = nf_titles %>%
