@@ -31,7 +31,7 @@ interativo, além de outros pacotes como
 [reactable](https://glin.github.io/reactable/) e
 [RColorBrewer](https://r-graph-gallery.com/38-rcolorbrewers-palettes.html).
 
-#### 1. Layout
+### 1. Layout
 
 O layout foi definido utilizando o `shinydashboard` como base,
 utilizando o `dashboardPage`, `dashboardHeader`, `dashboardSidebar` e
@@ -61,7 +61,7 @@ ui <- dashboardPage(
 
 <br>
 
-##### 1.1 Meta tags
+#### 1.1 Meta tags
 
 Foi adicionado um arquivo CSS customizado para corrigir alguns estilos
 do dashboard.
@@ -92,7 +92,7 @@ dashboardBody(
 
 <br>
 
-##### 1.2 Abas
+#### 1.2 Abas
 
 Foi utilizado o `tabItems` do `shinydashboard` para definir o conteúdo
 de cada aba, que são controladas através da interação com os itens do
@@ -122,7 +122,7 @@ tabItems(
 
 <br>
 
-##### 1.2.1 Aba Dashboard
+#### 1.2.1 Aba Dashboard
 
 Na aba **Dashboard** foi utilizada a seguinte estrutura:
 
@@ -174,7 +174,7 @@ tabItem(
 
 <br>
 
-##### 1.2.2 Aba Explorador
+#### 1.2.2 Aba Explorador
 
 Na aba **Explorador** foi utilizado o pacote `reactable` para exibir uma
 tabela que permite explorar todo o dataset, com filtro, ordenação,
@@ -196,7 +196,7 @@ tabItem(
 
 <br>
 
-##### 1.2.3 Aba Mapa
+#### 1.2.3 Aba Mapa
 
 Na aba **Mapa** foi utilizado o pacote `leaflet` para exibir um mapa
 interativo que mostra a quantidade de lançamentos por região. Além
@@ -220,15 +220,15 @@ tabItem(
 
 <br> <br>
 
-#### 2. Manipulação dos dados
+### 2. Manipulação dos dados
 
 <br>
 
-##### 2.1 Dashboard
+#### 2.1 Dashboard
 
 <br>
 
-##### 2.1.1 Total de títulos
+#### 2.1.1 Total de títulos
 
 ![](./docs/title_count.png)
 
@@ -244,7 +244,7 @@ nf_titles %>%
 
 <br>
 
-##### 2.1.2 Total de filmes
+#### 2.1.2 Total de filmes
 
 ![](./docs/movie_count.png)
 
@@ -262,7 +262,7 @@ nf_titles %>%
 
 <br>
 
-##### 2.1.3 Total de programas de TV
+#### 2.1.3 Total de programas de TV
 
 ![](./docs/tv_show_count.png)
 
@@ -280,7 +280,7 @@ nf_titles %>%
 
 <br>
 
-##### 2.1.4 Total de atores/atrizes
+#### 2.1.4 Total de atores/atrizes
 
 ![](./docs/cast_count.png)
 
@@ -307,7 +307,7 @@ nf_cast %>%
 
 <br>
 
-##### 2.1.5 Total de países
+#### 2.1.5 Total de países
 
 ![](./docs/country_count.png)
 
@@ -333,7 +333,7 @@ nf_countries %>%
 
 <br>
 
-##### 2.1.6 Total de diretores
+#### 2.1.6 Total de diretores
 
 ![](./docs/director_count.png)
 
@@ -352,7 +352,7 @@ nf_titles %>%
 
 <br>
 
-##### 2.1.7 Filmes vs Programas de TV
+#### 2.1.7 Filmes vs Programas de TV
 
 Agrupa por ano de lançamento e tipo, conta o número distinto de títulos
 de cada grupo, ordena pelo ano de lançamento e constrói o gráfico. O `x`
@@ -395,7 +395,7 @@ output$moviesVsTvShowPlot <- renderPlotly({
 
 <br>
 
-##### 2.1.8 Top 10 atores/atrizes
+#### 2.1.8 Top 10 atores/atrizes
 
 Agrupa pelos atores/atrizes, o dataset em que a coluna de atores/atrizes
 já foi separada, conta os títulos distintos, ordena pela contagem em
@@ -420,7 +420,7 @@ output$top10CastPlot <- renderPlot({
 
 <br>
 
-##### 2.2 Explorador
+#### 2.2 Explorador
 
 ``` r
 output$explorerTable <- renderReactable({
@@ -430,11 +430,11 @@ output$explorerTable <- renderReactable({
 
 <br>
 
-##### 2.3 Mapa
+#### 2.3 Mapa
 
 <br>
 
-##### 2.3.1 Controle de opacidade
+#### 2.3.1 Controle de opacidade
 
 ![](./docs/opacity_control.png)
 
@@ -463,7 +463,7 @@ output$mapControls = renderUI({
 
 <br>
 
-##### 2.3.2 Mapa
+#### 2.3.2 Mapa
 
 Primeiro é criado um dataset com a contagem de títulos lançados
 agrupados por país.

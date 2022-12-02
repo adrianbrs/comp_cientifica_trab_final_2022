@@ -26,7 +26,7 @@ Para a plotagem dos gráficos foi utilizado a biblioteca [ggplot2](https://ggplo
 Também foi utilizado o pacote do [leaflet](https://rstudio.github.io/leaflet/) para a exibição de um mapa interativo, além de outros pacotes como [ggthemes](https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/), [reactable](https://glin.github.io/reactable/) e [RColorBrewer](https://r-graph-gallery.com/38-rcolorbrewers-palettes.html).
 
 
-#### 1. Layout
+### 1. Layout
 O layout foi definido utilizando o `shinydashboard` como base, utilizando o `dashboardPage`, `dashboardHeader`, `dashboardSidebar` e `dashboardBody`.
 ```{r}
 ui <- dashboardPage(
@@ -52,7 +52,7 @@ ui <- dashboardPage(
 
 <br>
 
-##### 1.1 Meta tags
+#### 1.1 Meta tags
 Foi adicionado um arquivo CSS customizado para corrigir alguns estilos do dashboard.
 
 Também foi adicionado um código JavaScript simples na página que, sempre que a aba atual é alterada, o Shiny é notificado para atualizar o input `activeTab` no lado do servidor com o nome da aba atual.
@@ -78,7 +78,7 @@ dashboardBody(
 
 <br>
 
-##### 1.2 Abas
+#### 1.2 Abas
 Foi utilizado o `tabItems` do `shinydashboard` para definir o conteúdo de cada aba, que são controladas através da interação com os itens do menu lateral (`menuItem`).
 ```{r}
 tabItems(
@@ -104,7 +104,7 @@ tabItems(
 
 <br>
 
-##### 1.2.1 Aba Dashboard
+#### 1.2.1 Aba Dashboard
 Na aba **Dashboard** foi utilizada a seguinte estrutura:
 
 1. **Caixas de valor**: Elemento simples para exibir valores numéricos ou de texto, com um ícone.
@@ -152,7 +152,7 @@ tabItem(
 
 <br>
 
-##### 1.2.2 Aba Explorador
+#### 1.2.2 Aba Explorador
 Na aba **Explorador** foi utilizado o pacote `reactable` para exibir uma tabela que permite explorar todo o dataset, com filtro, ordenação, paginação e busca.
 ![Captura de tela da aba Explorador](./docs/explorer.png)
 ```{r}
@@ -170,7 +170,7 @@ tabItem(
 
 <br>
 
-##### 1.2.3 Aba Mapa
+#### 1.2.3 Aba Mapa
 Na aba **Mapa** foi utilizado o pacote `leaflet` para exibir um mapa interativo que mostra a quantidade de lançamentos por região. Além disso, foi adicionado um `sliderInput` no painel lateral, que aparece somente na aba **Mapa** e serve para alterar a opacidade dos polígonos do mapa.
 ![Captura de tela da aba Mapa](./docs/map.png)
 ```{r}
@@ -190,15 +190,15 @@ tabItem(
 <br>
 <br>
 
-#### 2. Manipulação dos dados
+### 2. Manipulação dos dados
 
 <br>
 
-##### 2.1 Dashboard
+#### 2.1 Dashboard
 
 <br>
 
-##### 2.1.1 Total de títulos
+#### 2.1.1 Total de títulos
 ![](./docs/title_count.png)
 
 Conta todos os títulos distintos e salva na coluna `n`, extrai apenas a coluna `n` e formata o valor.
@@ -211,7 +211,7 @@ nf_titles %>%
 
 <br>
 
-##### 2.1.2 Total de filmes
+#### 2.1.2 Total de filmes
 ![](./docs/movie_count.png)
 
 Filtra todos que possuem o valor `Movie` na coluna `type`, conta os títulos distintos e salva na coluna `n`, extrai a propriedade `n` e formata o valor.
@@ -225,7 +225,7 @@ nf_titles %>%
 
 <br>
 
-##### 2.1.3 Total de programas de TV
+#### 2.1.3 Total de programas de TV
 ![](./docs/tv_show_count.png)
 
 Filtra todos que possuem o valor `TV Show` na coluna `type`, conta os títulos distintos e salva na coluna `n`, extrai a propriedade `n` e formata o valor.
@@ -239,7 +239,7 @@ nf_titles %>%
 
 <br>
 
-##### 2.1.4 Total de atores/atrizes
+#### 2.1.4 Total de atores/atrizes
 ![](./docs/cast_count.png)
 
 Separa a coluna de atores/atrizes, converte uma coluna com vários atores/atrizes separados por vírgula em várias linhas com apenas um ator por linha.
@@ -260,7 +260,7 @@ nf_cast %>%
 
 <br>
 
-##### 2.1.5 Total de países
+#### 2.1.5 Total de países
 ![](./docs/country_count.png)
 
 Separa a coluna de países, converte uma coluna com vários países separados por vírgula em várias linhas com apenas um país na coluna.
@@ -281,7 +281,7 @@ nf_countries %>%
 
 <br>
 
-##### 2.1.6 Total de diretores
+#### 2.1.6 Total de diretores
 ![](./docs/director_count.png)
 
 Separa a coluna de diretores, conta todos os diretores distintos, salva na coluna `n`, extrai apenas a coluna `n` e formata o valor.
@@ -297,7 +297,7 @@ nf_titles %>%
 
 <br>
 
-##### 2.1.7 Filmes vs Programas de TV
+#### 2.1.7 Filmes vs Programas de TV
 Agrupa por ano de lançamento e tipo, conta o número distinto de títulos de cada grupo, ordena pelo ano de lançamento e constrói o gráfico. O `x` é o ano de lançamento, o `y` é a quantidade de lançamentos no respectivo ano. O tipo é utilizado para representar o estilo da linha e a cor.
 
 É utilizado o `renderPlotly` e o `ggplotly` para tornar o gráfico criado com o `ggplot` interativo.
@@ -334,7 +334,7 @@ output$moviesVsTvShowPlot <- renderPlotly({
 
 <br>
 
-##### 2.1.8 Top 10 atores/atrizes
+#### 2.1.8 Top 10 atores/atrizes
 Agrupa pelos atores/atrizes, o dataset em que a coluna de atores/atrizes já foi separada, conta os títulos distintos, ordena pela contagem em ordem decrescente e pega apenas os 10 primeiros.
 ```{r class.source = 'fold-show'}
 output$top10CastPlot <- renderPlot({
@@ -355,7 +355,7 @@ output$top10CastPlot <- renderPlot({
 
 <br>
 
-##### 2.2 Explorador
+#### 2.2 Explorador
 ```{r class.source = 'fold-show'}
 output$explorerTable <- renderReactable({
   reactable(nf_titles, defaultSorted = c("date_added", "title"), defaultSortOrder = "desc", filterable = TRUE, searchable = TRUE)
@@ -364,11 +364,11 @@ output$explorerTable <- renderReactable({
 
 <br>
 
-##### 2.3 Mapa
+#### 2.3 Mapa
 
 <br>
 
-##### 2.3.1 Controle de opacidade
+#### 2.3.1 Controle de opacidade
 ![](./docs/opacity_control.png)
 
 Sempre que a aba ativa for `map` o input de controle de opacidade é renderizado.
@@ -394,7 +394,7 @@ output$mapControls = renderUI({
 
 <br>
 
-##### 2.3.2 Mapa
+#### 2.3.2 Mapa
 Primeiro é criado um dataset com a contagem de títulos lançados agrupados por país.
 ```{r class.source = 'fold-show'}
 nf_countries_count <- nf_countries %>%
