@@ -44,7 +44,7 @@ ui <- dashboardPage(
   dashboardSidebar(
     width = 300,
     sidebarMenu(
-      # Items do menu de navegação entre as páginas
+      # Itens do menu de navegação entre as páginas
       menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
       menuItem("Explorador", tabName = "explorer", icon = icon("table")),
       menuItem("Mapa", tabName = "map", icon = icon("map")),

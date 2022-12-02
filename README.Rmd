@@ -3,10 +3,10 @@ title: "Trabalho Final - Computação Científica 2022/2"
 author: "Adrian Cerbaro <178304@upf.br>"
 date: "`r Sys.Date()`"
 output:
-  html_document:
-    code_folding: hide
   md_document:
     variant: markdown_github
+  html_document:
+    code_folding: hide
 ---
 
 ```{r setup, include=FALSE}
@@ -35,7 +35,7 @@ ui <- dashboardPage(
   dashboardSidebar(
     width = 300,
     sidebarMenu(
-      # Items do menu de navegação entre as páginas
+      # Itens do menu de navegação entre as páginas
       menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
       menuItem("Explorador", tabName = "explorer", icon = icon("table")),
       menuItem("Mapa", tabName = "map", icon = icon("map")),
