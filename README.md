@@ -210,7 +210,7 @@ tabItem(
   tabName = "map",
   fluidRow(
     box(
-      title = "Países com maiores quantidades de títulos produzidos",
+      title = "Países com maior número de lançamentos",
       width = 12,
       leafletOutput("map", height = 'calc(100vh - 200px)')
     )
@@ -228,7 +228,7 @@ tabItem(
 
 <br>
 
-#### 2.1.1 Total de títulos
+#### 2.1.1 Total de lançamentos
 
 ![](./docs/title_count.png)
 
@@ -249,7 +249,7 @@ nf_titles %>%
 ![](./docs/movie_count.png)
 
 Filtra todos que possuem o valor `Movie` na coluna `type`, conta os
-títulos distintos e salva na coluna `n`, extrai a propriedade `n` e
+lançamentos distintos e salva na coluna `n`, extrai a propriedade `n` e
 formata o valor.
 
 ``` r
@@ -267,7 +267,7 @@ nf_titles %>%
 ![](./docs/tv_show_count.png)
 
 Filtra todos que possuem o valor `TV Show` na coluna `type`, conta os
-títulos distintos e salva na coluna `n`, extrai a propriedade `n` e
+lançamentos distintos e salva na coluna `n`, extrai a propriedade `n` e
 formata o valor.
 
 ``` r
@@ -354,10 +354,11 @@ nf_titles %>%
 
 #### 2.1.7 Filmes vs Programas de TV
 
-Agrupa por ano de lançamento e tipo, conta o número distinto de títulos
-de cada grupo, ordena pelo ano de lançamento e constrói o gráfico. O `x`
-é o ano de lançamento, o `y` é a quantidade de lançamentos no respectivo
-ano. O tipo é utilizado para representar o estilo da linha e a cor.
+Agrupa por ano de lançamento e tipo, conta o número distinto de
+lançamentos de cada grupo, ordena pelo ano de lançamento e constrói o
+gráfico. O `x` é o ano de lançamento, o `y` é a quantidade de
+lançamentos no respectivo ano. O tipo é utilizado para representar o
+estilo da linha e a cor.
 
 É utilizado o `renderPlotly` e o `ggplotly` para tornar o gráfico criado
 com o `ggplot` interativo.
@@ -398,7 +399,7 @@ output$moviesVsTvShowPlot <- renderPlotly({
 #### 2.1.8 Top 10 atores/atrizes
 
 Agrupa pelos atores/atrizes, o dataset em que a coluna de atores/atrizes
-já foi separada, conta os títulos distintos, ordena pela contagem em
+já foi separada, conta os lançamentos distintos, ordena pela contagem em
 ordem decrescente e pega apenas os 10 primeiros.
 
 ``` r
@@ -414,7 +415,7 @@ output$top10CastPlot <- renderPlot({
     )) +
     geom_bar(stat = "identity") +
     coord_flip() +
-    labs(x = "Atores/Atrizes", y = "Títulos")
+    labs(x = "Atores/Atrizes", y = "Lançamentos")
 })
 ```
 
@@ -475,7 +476,7 @@ nf_countries_count <- nf_countries %>%
 ```
 
 Após isso, criamos um novo dataset através da intersecção da contagem de
-títulos por pais, com a geometria do mapa para cada país.
+lançamentos por pais, com a geometria do mapa para cada país.
 
 *Obs.: É preciso usar um join com regex pois pode haver diferenças entre
 os nomes do GeoJSON e do dataset, como por exemplo: United States e
@@ -498,7 +499,7 @@ região.
 pal <- colorBin("Reds", nf_countries_count$n, bins = c(0, 10, 100, 200, 300, 400, 600, 800, 1000, 2000, 3000, Inf))
   
 labels <- sprintf(
-  "<strong>%s</strong><br/>%d títulos</sup>",
+  "<strong>%s</strong><br/>%d lançamentos</sup>",
   countries_intersection$name, countries_intersection$n
 ) %>% lapply(htmltools::HTML)
 ```

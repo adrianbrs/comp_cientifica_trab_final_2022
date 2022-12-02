@@ -9,11 +9,12 @@ library(rgdal)
 library(RColorBrewer)
 library(sf)
 library(fuzzyjoin)
+library(readr)
 
 source('data.R')
 
 # Dataset
-nf_titles = as_tibble(read_csv("./data/netflix_titles.csv"))
+nf_titles = read_csv("./data/netflix_titles.csv")
 
 # Separa coluna de atores/atrizes
 nf_cast = nf_titles %>%
@@ -106,7 +107,7 @@ ui <- dashboardPage(
         tabName = "map",
         fluidRow(
           box(
-            title = "Países com maiores quantidades de títulos produzidos",
+            title = "Países com maior número de lançamentos",
             width = 12,
             leafletOutput("map", height = 'calc(100vh - 200px)')
           )
@@ -120,7 +121,7 @@ ui <- dashboardPage(
 server <- function(input, output, session) {
   # Dashboard ----
   # Value boxes
-  # Contagem de títulos
+  # Contagem de lançamentos
   output$totalCount <- renderValueBox({
     valueBox(
       width = 3,
@@ -128,7 +129,7 @@ server <- function(input, output, session) {
         summarize(n = n_distinct(show_id)) %>%
         pull(n) %>%
         format(big.mark = ".", decimal.mark = ","),
-      subtitle = "Títulos",
+      subtitle = "Lançamentos",
       icon = icon("table"),
       color = "black"
     )
@@ -248,7 +249,7 @@ server <- function(input, output, session) {
       )) +
       geom_bar(stat = "identity") +
       coord_flip() +
-      labs(x = "Atores/Atrizes", y = "Títulos")
+      labs(x = "Atores/Atrizes", y = "Lançamentos")
   })
   
   # Explorer ----
@@ -273,7 +274,7 @@ server <- function(input, output, session) {
     pal <- colorBin("Reds", nf_countries_count$n, bins = c(0, 10, 100, 200, 300, 400, 600, 800, 1000, 2000, 3000, Inf))
     
     labels <- sprintf(
-      "<strong>%s</strong><br/>%d títulos</sup>",
+      "<strong>%s</strong><br/>%d lançamentos</sup>",
       countries_intersection$name, countries_intersection$n
     ) %>% lapply(htmltools::HTML)
     
