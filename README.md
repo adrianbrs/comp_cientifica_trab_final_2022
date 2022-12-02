@@ -1,34 +1,43 @@
----
-title: "Trabalho Final - Computação Científica 2022/2"
-author: "Adrian Cerbaro <178304@upf.br>"
-date: "`r Sys.Date()`"
-output:
-  html_document:
-    code_folding: hide
-  md_document:
-    variant: markdown_github
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, eval = FALSE, collapse = TRUE)
-```
-
 # Dashboard
+
 ## Netflix Movies and TV Shows
+
 ### Dataset utilizado disponível no [Kaggle](https://www.kaggle.com/datasets/shivamb/netflix-shows)
 
-O dataset utilizado consiste em uma lista de todos os filmes e programas de TV disponíveis na Netflix, juntamente com detalhes como elenco, diretores, classificações, ano de lançamento, duração, etc. O dashboard implementado exibe algumas informações como a quantidade total de filmes, programas de TV, atores e atrizes, bem como comparações da distribuição dos filmes e shows entre os países, e comparações do crescimento entre filmes e programas de TV ao longo dos últimos anos.
+O dataset utilizado consiste em uma lista de todos os filmes e programas
+de TV disponíveis na Netflix, juntamente com detalhes como elenco,
+diretores, classificações, ano de lançamento, duração, etc. O dashboard
+implementado exibe algumas informações como a quantidade total de
+filmes, programas de TV, atores e atrizes, bem como comparações da
+distribuição dos filmes e shows entre os países, e comparações do
+crescimento entre filmes e programas de TV ao longo dos últimos anos.
 
 ### Implementação
-A base do dashboard foi construida usando o [Shiny](https://shiny.rstudio.com/) e o [Shiny Dashboard](https://rstudio.github.io/shinydashboard/).
-Para a manipulação dos dados foram utilizadas as bibliotecas [dplyr](https://dplyr.tidyverse.org/), [fuzzyjoin](https://github.com/dgrtwo/fuzzyjoin), [sf](https://r-spatial.github.io/sf/) e [rgdal](https://rdrr.io/cran/rgdal/).
-Para a plotagem dos gráficos foi utilizado a biblioteca [ggplot2](https://ggplot2.tidyverse.org/), e para a interatividade dos gráficos a biblioteca [Plotly](https://plotly.com/r/).
-Também foi utilizado o pacote do [leaflet](https://rstudio.github.io/leaflet/) para a exibição de um mapa interativo, além de outros pacotes como [ggthemes](https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/), [reactable](https://glin.github.io/reactable/) e [RColorBrewer](https://r-graph-gallery.com/38-rcolorbrewers-palettes.html).
 
+A base do dashboard foi construida usando o
+[Shiny](https://shiny.rstudio.com/) e o [Shiny
+Dashboard](https://rstudio.github.io/shinydashboard/). Para a
+manipulação dos dados foram utilizadas as bibliotecas
+[dplyr](https://dplyr.tidyverse.org/),
+[fuzzyjoin](https://github.com/dgrtwo/fuzzyjoin),
+[sf](https://r-spatial.github.io/sf/) e
+[rgdal](https://rdrr.io/cran/rgdal/). Para a plotagem dos gráficos foi
+utilizado a biblioteca [ggplot2](https://ggplot2.tidyverse.org/), e para
+a interatividade dos gráficos a biblioteca
+[Plotly](https://plotly.com/r/). Também foi utilizado o pacote do
+[leaflet](https://rstudio.github.io/leaflet/) para a exibição de um mapa
+interativo, além de outros pacotes como
+[ggthemes](https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/),
+[reactable](https://glin.github.io/reactable/) e
+[RColorBrewer](https://r-graph-gallery.com/38-rcolorbrewers-palettes.html).
 
 #### 1. Layout
-O layout foi definido utilizando o `shinydashboard` como base, utilizando o `dashboardPage`, `dashboardHeader`, `dashboardSidebar` e `dashboardBody`.
-```{r}
+
+O layout foi definido utilizando o `shinydashboard` como base,
+utilizando o `dashboardPage`, `dashboardHeader`, `dashboardSidebar` e
+`dashboardBody`.
+
+``` r
 ui <- dashboardPage(
   skin = "black",
   dashboardHeader(title = "Netflix Movies and TV Shows", titleWidth = 300),
@@ -53,10 +62,15 @@ ui <- dashboardPage(
 <br>
 
 ##### 1.1 Meta tags
-Foi adicionado um arquivo CSS customizado para corrigir alguns estilos do dashboard.
 
-Também foi adicionado um código JavaScript simples na página que, sempre que a aba atual é alterada, o Shiny é notificado para atualizar o input `activeTab` no lado do servidor com o nome da aba atual.
-```{r}
+Foi adicionado um arquivo CSS customizado para corrigir alguns estilos
+do dashboard.
+
+Também foi adicionado um código JavaScript simples na página que, sempre
+que a aba atual é alterada, o Shiny é notificado para atualizar o input
+`activeTab` no lado do servidor com o nome da aba atual.
+
+``` r
 # ...
 dashboardBody(
   # META TAGS
@@ -79,8 +93,12 @@ dashboardBody(
 <br>
 
 ##### 1.2 Abas
-Foi utilizado o `tabItems` do `shinydashboard` para definir o conteúdo de cada aba, que são controladas através da interação com os itens do menu lateral (`menuItem`).
-```{r}
+
+Foi utilizado o `tabItems` do `shinydashboard` para definir o conteúdo
+de cada aba, que são controladas através da interação com os itens do
+menu lateral (`menuItem`).
+
+``` r
 tabItems(
       # Dashboard ----
       tabItem(
@@ -105,21 +123,25 @@ tabItems(
 <br>
 
 ##### 1.2.1 Aba Dashboard
+
 Na aba **Dashboard** foi utilizada a seguinte estrutura:
 
-1. **Caixas de valor**: Elemento simples para exibir valores numéricos ou de texto, com um ícone.
-    + Quantidade total de títulos
-    + Quantidade total de filmes
-    + Quantidade total de programas de TV
-    + Quantidade total de atores e atrizes
-    + Quantidade total de paises
-    + Quantidade total de diretores
-2. **Filmes vs Show de TV (Gráfico)**: Comparativo do crescimento de filmes e programas de TV ao longo dos últimos anos.
-3. **Top 10 atores/atrizes (Gráfico)**: Os 10 atores/atrizes que mais aparecem em filmes diferentes.
+1.  **Caixas de valor**: Elemento simples para exibir valores numéricos
+    ou de texto, com um ícone.
+    -   Quantidade total de títulos
+    -   Quantidade total de filmes
+    -   Quantidade total de programas de TV
+    -   Quantidade total de atores e atrizes
+    -   Quantidade total de paises
+    -   Quantidade total de diretores
+2.  **Filmes vs Show de TV (Gráfico)**: Comparativo do crescimento de
+    filmes e programas de TV ao longo dos últimos anos.
+3.  **Top 10 atores/atrizes (Gráfico)**: Os 10 atores/atrizes que mais
+    aparecem em filmes diferentes.
 
 ![Captura de tela da aba dashboard](./docs/dashboard.png)
 
-```{r}
+``` r
 # Dashboard ----
 tabItem(
   tabName = "dashboard",
@@ -153,9 +175,13 @@ tabItem(
 <br>
 
 ##### 1.2.2 Aba Explorador
-Na aba **Explorador** foi utilizado o pacote `reactable` para exibir uma tabela que permite explorar todo o dataset, com filtro, ordenação, paginação e busca.
-![Captura de tela da aba Explorador](./docs/explorer.png)
-```{r}
+
+Na aba **Explorador** foi utilizado o pacote `reactable` para exibir uma
+tabela que permite explorar todo o dataset, com filtro, ordenação,
+paginação e busca. ![Captura de tela da aba
+Explorador](./docs/explorer.png)
+
+``` r
 # Explorer ----
 tabItem(
   tabName = "explorer",
@@ -171,9 +197,14 @@ tabItem(
 <br>
 
 ##### 1.2.3 Aba Mapa
-Na aba **Mapa** foi utilizado o pacote `leaflet` para exibir um mapa interativo que mostra a quantidade de lançamentos por região. Além disso, foi adicionado um `sliderInput` no painel lateral, que aparece somente na aba **Mapa** e serve para alterar a opacidade dos polígonos do mapa.
-![Captura de tela da aba Mapa](./docs/map.png)
-```{r}
+
+Na aba **Mapa** foi utilizado o pacote `leaflet` para exibir um mapa
+interativo que mostra a quantidade de lançamentos por região. Além
+disso, foi adicionado um `sliderInput` no painel lateral, que aparece
+somente na aba **Mapa** e serve para alterar a opacidade dos polígonos
+do mapa. ![Captura de tela da aba Mapa](./docs/map.png)
+
+``` r
 # Map ----
 tabItem(
   tabName = "map",
@@ -187,8 +218,7 @@ tabItem(
 )
 ```
 
-<br>
-<br>
+<br> <br>
 
 #### 2. Manipulação dos dados
 
@@ -199,10 +229,13 @@ tabItem(
 <br>
 
 ##### 2.1.1 Total de títulos
+
 ![](./docs/title_count.png)
 
-Conta todos os títulos distintos e salva na coluna `n`, extrai apenas a coluna `n` e formata o valor.
-```{r class.source = 'fold-show'}
+Conta todos os títulos distintos e salva na coluna `n`, extrai apenas a
+coluna `n` e formata o valor.
+
+``` r
 nf_titles %>%
     summarize(n = n_distinct(show_id)) %>%
     pull(n) %>%
@@ -212,10 +245,14 @@ nf_titles %>%
 <br>
 
 ##### 2.1.2 Total de filmes
+
 ![](./docs/movie_count.png)
 
-Filtra todos que possuem o valor `Movie` na coluna `type`, conta os títulos distintos e salva na coluna `n`, extrai a propriedade `n` e formata o valor.
-```{r class.source = 'fold-show'}
+Filtra todos que possuem o valor `Movie` na coluna `type`, conta os
+títulos distintos e salva na coluna `n`, extrai a propriedade `n` e
+formata o valor.
+
+``` r
 nf_titles %>%
     filter(type == "Movie") %>%
     summarize(n = n_distinct(show_id)) %>%
@@ -226,10 +263,14 @@ nf_titles %>%
 <br>
 
 ##### 2.1.3 Total de programas de TV
+
 ![](./docs/tv_show_count.png)
 
-Filtra todos que possuem o valor `TV Show` na coluna `type`, conta os títulos distintos e salva na coluna `n`, extrai a propriedade `n` e formata o valor.
-```{r class.source = 'fold-show'}
+Filtra todos que possuem o valor `TV Show` na coluna `type`, conta os
+títulos distintos e salva na coluna `n`, extrai a propriedade `n` e
+formata o valor.
+
+``` r
 nf_titles %>%
     filter(type == "TV Show") %>%
     summarize(n = n_distinct(show_id)) %>%
@@ -240,18 +281,24 @@ nf_titles %>%
 <br>
 
 ##### 2.1.4 Total de atores/atrizes
+
 ![](./docs/cast_count.png)
 
-Separa a coluna de atores/atrizes, converte uma coluna com vários atores/atrizes separados por vírgula em várias linhas com apenas um ator por linha.
-```{r class.source = 'fold-show'}
+Separa a coluna de atores/atrizes, converte uma coluna com vários
+atores/atrizes separados por vírgula em várias linhas com apenas um ator
+por linha.
+
+``` r
 nf_cast = nf_titles %>%
   separate_rows(cast, sep = ",") %>%
   mutate(cast = str_trim(cast, side = "both")) %>%
   filter(cast != "")
 ```
 
-Conta todos os atores/atrizes distintos e salva na coluna `n`, extrai apenas a coluna `n` e formata o valor.
-```{r class.source = 'fold-show'}
+Conta todos os atores/atrizes distintos e salva na coluna `n`, extrai
+apenas a coluna `n` e formata o valor.
+
+``` r
 nf_cast %>%
       summarise(n = n_distinct(cast)) %>%
       pull(n) %>%
@@ -261,18 +308,23 @@ nf_cast %>%
 <br>
 
 ##### 2.1.5 Total de países
+
 ![](./docs/country_count.png)
 
-Separa a coluna de países, converte uma coluna com vários países separados por vírgula em várias linhas com apenas um país na coluna.
-```{r class.source = 'fold-show'}
+Separa a coluna de países, converte uma coluna com vários países
+separados por vírgula em várias linhas com apenas um país na coluna.
+
+``` r
 nf_countries = nf_titles %>%
   separate_rows(country, sep = ",") %>%
   mutate(country = str_trim(country, side = "both")) %>%
   filter(country != "")
 ```
 
-Conta todos os países distintos e salva na coluna `n`, extrai apenas a coluna `n` e formata o valor.
-```{r class.source = 'fold-show'}
+Conta todos os países distintos e salva na coluna `n`, extrai apenas a
+coluna `n` e formata o valor.
+
+``` r
 nf_countries %>%
     summarise(n = n_distinct(country)) %>%
     pull(n) %>%
@@ -282,10 +334,13 @@ nf_countries %>%
 <br>
 
 ##### 2.1.6 Total de diretores
+
 ![](./docs/director_count.png)
 
-Separa a coluna de diretores, conta todos os diretores distintos, salva na coluna `n`, extrai apenas a coluna `n` e formata o valor.
-```{r class.source = 'fold-show'}
+Separa a coluna de diretores, conta todos os diretores distintos, salva
+na coluna `n`, extrai apenas a coluna `n` e formata o valor.
+
+``` r
 nf_titles %>%
       separate_rows(director, sep = ",") %>%
       mutate(director = str_trim(director, side = "both")) %>%
@@ -298,10 +353,16 @@ nf_titles %>%
 <br>
 
 ##### 2.1.7 Filmes vs Programas de TV
-Agrupa por ano de lançamento e tipo, conta o número distinto de títulos de cada grupo, ordena pelo ano de lançamento e constrói o gráfico. O `x` é o ano de lançamento, o `y` é a quantidade de lançamentos no respectivo ano. O tipo é utilizado para representar o estilo da linha e a cor.
 
-É utilizado o `renderPlotly` e o `ggplotly` para tornar o gráfico criado com o `ggplot` interativo.
-```{r class.source = 'fold-show'}
+Agrupa por ano de lançamento e tipo, conta o número distinto de títulos
+de cada grupo, ordena pelo ano de lançamento e constrói o gráfico. O `x`
+é o ano de lançamento, o `y` é a quantidade de lançamentos no respectivo
+ano. O tipo é utilizado para representar o estilo da linha e a cor.
+
+É utilizado o `renderPlotly` e o `ggplotly` para tornar o gráfico criado
+com o `ggplot` interativo.
+
+``` r
 output$moviesVsTvShowPlot <- renderPlotly({
   ggplotly(
     tooltip = c("text"),
@@ -335,8 +396,12 @@ output$moviesVsTvShowPlot <- renderPlotly({
 <br>
 
 ##### 2.1.8 Top 10 atores/atrizes
-Agrupa pelos atores/atrizes, o dataset em que a coluna de atores/atrizes já foi separada, conta os títulos distintos, ordena pela contagem em ordem decrescente e pega apenas os 10 primeiros.
-```{r class.source = 'fold-show'}
+
+Agrupa pelos atores/atrizes, o dataset em que a coluna de atores/atrizes
+já foi separada, conta os títulos distintos, ordena pela contagem em
+ordem decrescente e pega apenas os 10 primeiros.
+
+``` r
 output$top10CastPlot <- renderPlot({
   nf_cast %>%
     group_by(cast) %>%
@@ -356,7 +421,8 @@ output$top10CastPlot <- renderPlot({
 <br>
 
 ##### 2.2 Explorador
-```{r class.source = 'fold-show'}
+
+``` r
 output$explorerTable <- renderReactable({
   reactable(nf_titles, defaultSorted = c("date_added", "title"), defaultSortOrder = "desc", filterable = TRUE, searchable = TRUE)
 })
@@ -369,10 +435,13 @@ output$explorerTable <- renderReactable({
 <br>
 
 ##### 2.3.1 Controle de opacidade
+
 ![](./docs/opacity_control.png)
 
-Sempre que a aba ativa for `map` o input de controle de opacidade é renderizado.
-```{r class.source = 'fold-show'}
+Sempre que a aba ativa for `map` o input de controle de opacidade é
+renderizado.
+
+``` r
 output$mapControls = renderUI({
   if (!is.null(input$activeTab) && input$activeTab == "map") {
     fluidRow(
@@ -395,18 +464,24 @@ output$mapControls = renderUI({
 <br>
 
 ##### 2.3.2 Mapa
-Primeiro é criado um dataset com a contagem de títulos lançados agrupados por país.
-```{r class.source = 'fold-show'}
+
+Primeiro é criado um dataset com a contagem de títulos lançados
+agrupados por país.
+
+``` r
 nf_countries_count <- nf_countries %>%
     group_by(country) %>%
     summarise(n = n_distinct(show_id))
 ```
 
-Após isso, criamos um novo dataset através da intersecção da contagem de títulos por pais, com a geometria do mapa para cada país.
+Após isso, criamos um novo dataset através da intersecção da contagem de
+títulos por pais, com a geometria do mapa para cada país.
 
-*Obs.: É preciso usar um join com regex pois pode haver diferenças entre os nomes do GeoJSON e do dataset, como por exemplo: United States e United States of America*
+*Obs.: É preciso usar um join com regex pois pode haver diferenças entre
+os nomes do GeoJSON e do dataset, como por exemplo: United States e
+United States of America*
 
-```{r class.source = 'fold-show'}
+``` r
 # É preciso converter para um objeto SF usando `st_as_sf` para que o leaflet encontre as geometrias dos países 
 countries_intersection <- st_as_sf(
   world_country %>%
@@ -414,9 +489,12 @@ countries_intersection <- st_as_sf(
 )
 ```
 
-É criado uma paleta de cores que será usada para pintar as regiões do mapa de acordo com a quantidade de lançamentos da região.
-Também é criado um modelo para as labels do tooltip ao passar o mouse sobre uma região.
-```{r class.source = 'fold-show'}
+É criado uma paleta de cores que será usada para pintar as regiões do
+mapa de acordo com a quantidade de lançamentos da região. Também é
+criado um modelo para as labels do tooltip ao passar o mouse sobre uma
+região.
+
+``` r
 pal <- colorBin("Reds", nf_countries_count$n, bins = c(0, 10, 100, 200, 300, 400, 600, 800, 1000, 2000, 3000, Inf))
   
 labels <- sprintf(
@@ -426,7 +504,8 @@ labels <- sprintf(
 ```
 
 Por último, criamos um mapa do leaflet:
-```{r class.source = 'fold-show'}
+
+``` r
 # Obtém o valor da opacidade do input em forma de porcentagem
 opacity <- input[["mapOpcaitySlider"]] / 100
 
